@@ -15,13 +15,29 @@ int main()
 {
 	hid_init(); // intialises the hid api
 	struct hid_device_info *hid_devices_pointer, *mouse_ptr; // pointers to struct hid_device_info to store the linked list starting addresses returned from hid_enumerate()
-	hid_devices_pointer =  hid_enumerate(0x0, 0x0) ; // enumerate all hid devices in laptop
-	PrintDeviceInfo(hid_devices_pointer); // prints information about devices, defined in hidExp.c
-	mouse_ptr = hid_enumerate(MOUSE_VENDOR_ID, MOUSE_PRODUCT_ID); // gets information about the mouse
-	PrintDeviceInfo(mouse_ptr); // prints information about the mouse
+	hid_device *handle; 
 
+	hid_devices_pointer =  hid_enumerate(0x0, 0x0) ; // enumerate all hid devices in laptop
+//	PrintDeviceInfo(hid_devices_pointer); // prints information about devices, defined in main.c
+	
+	mouse_ptr = hid_enumerate(MOUSE_VENDOR_ID, MOUSE_PRODUCT_ID); // gets information about the mouse
+//	PrintDeviceInfo(mouse_ptr); // prints information about the mouse
+	
+	handle = hid_open_path(mouse_ptr->path);
+	if (handle == NULL)
+	{
+		printf("Opening device failed!\n");
+		return 1;
+	}		
+	#define MAX_STR 255
+	int result;
+	wchar_t wstr[MAX_STR];
+
+	result = hid_get_manufacturer_string(handle, wstr, MAX_STR);
+	printf("Manufacturer: %ls\n", wstr);	
 	hid_free_enumeration(hid_devices_pointer); // free the memory
 	hid_free_enumeration(mouse_ptr); // free the memory
+	
 	hid_exit(); // clean up 
 	return 0; // return
 }
