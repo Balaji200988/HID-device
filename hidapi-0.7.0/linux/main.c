@@ -23,11 +23,14 @@ int main()
 	mouse_ptr = hid_enumerate(MOUSE_VENDOR_ID, MOUSE_PRODUCT_ID); // gets information about the mouse
 //	PrintDeviceInfo(mouse_ptr); // prints information about the mouse
 	
-	handle = hid_open_path(mouse_ptr->path);
+	handle = hid_open(mouse_ptr->vendor_id, mouse_ptr->product_id, mouse_ptr->serial_number);
 	if (handle == NULL)
 	{
 		printf("Opening device failed!\n");
 		return 1;
+	}else
+	{
+		printf("Opened device at %s\n", mouse_ptr->path);
 	}		
 	#define MAX_STR 255
 	int result;
