@@ -13,6 +13,7 @@ void PrintDeviceInfo(struct hid_device_info *);
 
 int main()
 {
+	unsigned char buf[65];
 	hid_init(); // intialises the hid api
 	struct hid_device_info *hid_devices_pointer, *mouse_ptr; // pointers to struct hid_device_info to store the linked list starting addresses returned from hid_enumerate()
 	hid_device *handle; 
@@ -38,6 +39,16 @@ int main()
 
 	result = hid_get_manufacturer_string(handle, wstr, MAX_STR);
 	printf("Manufacturer: %ls\n", wstr);	
+	
+	//hid_set_nonblocking(handle, 1);
+		
+	result = hid_read_timeout(handle, buf, 65, 20000);
+	if (result < 0) printf("Unable to read\n");
+//	for (int i = 0; i < result; i++)
+//	{
+//		printf("buf[%d]: %d\n", i, buf[i]);
+//	}	
+	printf("Number of bytes read = %d", result);	
 	hid_free_enumeration(hid_devices_pointer); // free the memory
 	hid_free_enumeration(mouse_ptr); // free the memory
 	

@@ -3,3 +3,10 @@ install libudev
 run as root to open device
 
 
+check for permissions
+Are the permissions right? Look at the udev file in the udev/ directory.
+the device's mode is 666. This is the relevant rule:
+
+SUBSYSTEM=="hidraw", ATTRS{idVendor}=="21a1", ATTRS{idProduct}=="0001", MODE="0666"
+
+
