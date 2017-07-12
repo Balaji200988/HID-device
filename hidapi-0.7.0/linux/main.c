@@ -36,6 +36,5 @@ void PrintDeviceInfo(struct hid_device_info *temp)
 		printf("Manufacturer: %ls\n", temp->manufacturer_string);
 		printf("Product     : %ls\n\n", temp->product_string);
 		temp = temp->next;// go to the next object in the linked list
-		usleep(500);
 	}
 }
