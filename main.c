@@ -8,6 +8,9 @@
 #define MOUSE_VENDOR_ID  0x045e
 #define MOUSE_PRODUCT_ID 0x07fd
 
+void PrintDeviceInfo(struct hid_device_info *);
+
+
 int main()
 {
 	hid_init(); // intialises the hid api
