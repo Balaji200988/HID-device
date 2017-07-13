@@ -5,8 +5,8 @@
 
 #include "hidapi.h"
 
-#define MOUSE_VENDOR_ID  0x045e
-#define MOUSE_PRODUCT_ID 0x07fd
+#define TAIDOC_VENDOR_ID 10c4
+#define TAIDOC_PRODUCT_ID ea80 
 
 void PrintDeviceInfo(struct hid_device_info *);
 
@@ -18,10 +18,10 @@ int main()
 	hid_device *handle; 
 
 	hid_devices_pointer =  hid_enumerate(0x0, 0x0) ; // enumerate all hid devices in laptop
-//	PrintDeviceInfo(hid_devices_pointer); // prints information about devices, defined in main.c
+	PrintDeviceInfo(hid_devices_pointer); // prints information about devices, defined in main.c
 	
-	mouse_ptr = hid_enumerate(MOUSE_VENDOR_ID, MOUSE_PRODUCT_ID); // gets information about the mouse
-//	PrintDeviceInfo(mouse_ptr); // prints information about the mouse
+	mouse_ptr = hid_enumerate(TAIDOC_VENDOR_ID,TAIDOC_PRODUCT_ID); // gets information about the mouse
+	PrintDeviceInfo(mouse_ptr); // prints information about the mouse
 	
 	handle = hid_open_path(mouse_ptr->path);
 	if (handle == NULL)
@@ -54,3 +54,4 @@ void PrintDeviceInfo(struct hid_device_info *temp)
 		temp = temp->next;// go to the next object in the linked list
 	}
 }
+
